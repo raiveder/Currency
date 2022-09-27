@@ -4,13 +4,43 @@
              xmlns:local="clr-namespace:Валюты"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Style x:Key="btnStyle" TargetType="Button">
-            <Setter Property="Background" Value="NavajoWhite"/>
-            <Setter Property="FontWeight" Value="DemiBold"/>
-            <Setter Property="Width" Value="100"/>
+        <Style x:Key="tbStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Arial Narrow"/>
             <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="5 5 10 0"/>
         </Style>
+
+        <Style x:Key="cbStyle" TargetType="ComboBox">
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="FontFamily" Value="Arial Narrow"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style x:Key="rbStyle" TargetType="RadioButton">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Arial Narrow"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style x:Key="tboxStyle" TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Arial Narrow"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="0 5 10 0"/>
+            <Setter Property="MinWidth" Value="40"/>
+        </Style>
+        
+        <ControlTemplate TargetType="Button" x:Key="btnTemplate">
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1" Background="NavajoWhite" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5 15 0 0">
+                <ContentControl Margin="5" Content="Конвертировать" FontSize="20" FontWeight="DemiBold" FontFamily="Arial Narrow"/>
+                </Border>
+        </ControlTemplate>
     </Application.Resources>
 </Application>

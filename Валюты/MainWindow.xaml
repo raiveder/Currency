@@ -5,57 +5,57 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Валюты"
         mc:Ignorable="d"
-        Title="Конвертер валют" Height="450" Width="800">
-    <Grid>
+        Title="Конвертер валют" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid Background="PapayaWhip">
         <StackPanel>
-            <StackPanel Orientation="Horizontal" Height="20">
-                <TextBlock Text="Конвертировать из" Width="150"/>
-                <ComboBox Width="160" Name="cbland" SelectionChanged="cbLand_SelectionChanged">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Конвертировать из" Width="150" Style="{StaticResource tbStyle}"/>
+                <ComboBox Name="cbland" Style="{StaticResource cbStyle}" SelectionChanged="cbLand_SelectionChanged">
                     <ComboBoxItem Content="Отечественной валюты"/>
                     <ComboBoxItem Content="Иностранной валюты"/>
                 </ComboBox>
             </StackPanel>
-            <StackPanel Height="40" Name="spHomeLand">
-                <StackPanel Orientation="Horizontal" Height="20">
-                    <TextBlock Text="Рубли:" Width="80"/>
-                    <TextBox Width="50" Name="tbRUBinp"/>
-                    <TextBlock Text="Копейки:" Width="80"/>
-                    <TextBox Width="50" Name="tbKOPinp"/>
+            <StackPanel Name="spHomeland">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Рубли:" Style="{StaticResource tbStyle}"/>
+                    <TextBox Name="tbRUBinp" Style="{StaticResource tboxStyle}"/>
+                    <TextBlock Text="Копейки:" Style="{StaticResource tbStyle}"/>
+                    <TextBox Name="tbKOPinp" Style="{StaticResource tboxStyle}" TextChanged="tbKOPinp_TextChanged"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Height="20">
-                    <TextBlock Text="Конвертировать в" Width="150"/>
-                    <RadioButton x:Name="rbUSDout" Content="Доллары" Click="rbUSDout_Click"/>
-                    <RadioButton x:Name="rbEURout" Content="Евро" Click="rbEURout_Click"/>
-                    <RadioButton x:Name="rbKZTout" Content="Тенге" Click="rbKZTout_Click"/>
-                    <RadioButton x:Name="rbUAHout" Content="Гривны" Click="rbUAHout_Click"/>
-                    <RadioButton x:Name="rbTRYout" Content="Лиры" Click="rbTRYout_Click"/>
+                <StackPanel Orientation="Horizontal" Name="spChoiceHomeland">
+                    <TextBlock Text="Конвертировать в" Style="{StaticResource tbStyle}"/>
+                    <RadioButton x:Name="rbUSDout" Content="Доллары" Style="{StaticResource rbStyle}" Click="rbUSDout_Click"/>
+                    <RadioButton x:Name="rbEURout" Content="Евро" Style="{StaticResource rbStyle}" Click="rbEURout_Click"/>
+                    <RadioButton x:Name="rbKZTout" Content="Тенге" Style="{StaticResource rbStyle}" Click="rbKZTout_Click"/>
+                    <RadioButton x:Name="rbUAHout" Content="Гривны" Style="{StaticResource rbStyle}" Click="rbUAHout_Click"/>
+                    <RadioButton x:Name="rbTRYout" Content="Лиры" Style="{StaticResource rbStyle}" Click="rbTRYout_Click"/>
                 </StackPanel>
             </StackPanel>
-            <StackPanel Height="40" Name="spForeignland">
-                <StackPanel Orientation="Horizontal" Height="20">
-                    <RadioButton x:Name="rbUSD" Content="Доллары" Click="rbUSD_Click"/>
-                    <RadioButton x:Name="rbEUR" Content="Евро" Click="rbEUR_Click"/>
-                    <RadioButton x:Name="rbKZT" Content="Тенге" Click="rbKZT_Click"/>
-                    <RadioButton x:Name="rbUAH" Content="Гривны" Click="rbUAH_Click"/>
-                    <RadioButton x:Name="rbTRY" Content="Лиры" Click="rbTRY_Click"/>
+            <StackPanel Name="spForeignland">
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton x:Name="rbUSD" Content="Доллары" Style="{StaticResource rbStyle}" Click="rbUSD_Click"/>
+                    <RadioButton x:Name="rbEUR" Content="Евро" Style="{StaticResource rbStyle}" Click="rbEUR_Click"/>
+                    <RadioButton x:Name="rbKZT" Content="Тенге" Style="{StaticResource rbStyle}" Click="rbKZT_Click"/>
+                    <RadioButton x:Name="rbUAH" Content="Гривны" Style="{StaticResource rbStyle}" Click="rbUAH_Click"/>
+                    <RadioButton x:Name="rbTRY" Content="Лиры" Style="{StaticResource rbStyle}" Click="rbTRY_Click"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Height="20">
-                    <TextBlock Text="Валюта:" Width="80" Name="tbForeignInp"/>
-                    <TextBox Width="50" Name="tbForeignVal"/>
+                <StackPanel Orientation="Horizontal" Name="spForeignInp">
+                    <TextBlock Text="Валюта:" Name="tbForeignInp" Style="{StaticResource tbStyle}"/>
+                    <TextBox Name="tbForeignVal" Style="{StaticResource tboxStyle}"/>
                 </StackPanel>
             </StackPanel>
 
             <StackPanel>
-                <Button Name="Run" Style="{StaticResource btnStyle}" Content="Перевести" Click="Run_Click"/>
+                <Button Name="Run" Template="{StaticResource btnTemplate}" Click="Run_Click"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Height="20" Name="spHomeOut">
-                <TextBlock Text="Валюта:" Width="100" Name="tbHomeOut"/>
+            <StackPanel Orientation="Horizontal" Name="spHomeOut">
+                <TextBlock Text="Валюта:" Name="tbHomeOut" Style="{StaticResource tbStyle}"/>
             </StackPanel>
 
-            <StackPanel Height="40" Name="spForeignOut" HorizontalAlignment="Left">
-                <TextBlock Text="Рубли:" Width="80" Name="tbRubOut"/>
-                <TextBlock Text="Копейки:" Width="80" Name="tbKopOut"/>
+            <StackPanel Name="spForeignOut" HorizontalAlignment="Left">
+                <TextBlock Text="Рубли:" Name="tbRubOut" Style="{StaticResource tbStyle}"/>
+                <TextBlock Text="Копейки:" Name="tbKopOut" Style="{StaticResource tbStyle}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

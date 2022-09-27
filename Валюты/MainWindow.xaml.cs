@@ -30,119 +30,176 @@ namespace Валюты
             cbland.SelectedIndex = 0;
         }
 
-        private static string currency;
+        private string currency;
 
         private void cbLand_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            currency = null;
             if (cbland.SelectedIndex == 0)
             {
                 spForeignland.Visibility = Visibility.Collapsed;
                 spForeignOut.Visibility = Visibility.Collapsed;
-                spHomeLand.Visibility = Visibility.Visible;
+                spHomeland.Visibility = Visibility.Visible;
                 spHomeOut.Visibility = Visibility.Collapsed;
+                tbRUBinp.Text = null;
+                tbKOPinp.Text = null;
+
+                rbUSDout.IsChecked = false;
+                rbEURout.IsChecked = false;
+                rbKZTout.IsChecked = false;
+                rbUAHout.IsChecked = false;
+                rbTRYout.IsChecked = false;
+
+                spChoiceHomeland.Visibility = Visibility.Collapsed;
             }
             else
             {
-                spHomeLand.Visibility = Visibility.Collapsed;
+                spHomeland.Visibility = Visibility.Collapsed;
                 spHomeOut.Visibility = Visibility.Collapsed;
                 spForeignland.Visibility = Visibility.Visible;
                 spForeignOut.Visibility = Visibility.Collapsed;
+                tbForeignVal.Text = null;
+                spForeignInp.Visibility = Visibility.Collapsed;
+
+                rbUSD.IsChecked = false;
+                rbEUR.IsChecked = false;
+                rbKZT.IsChecked = false;
+                rbUAH.IsChecked = false;
+                rbTRY.IsChecked = false;
             }
         }
 
         private void Run_Click(object sender, RoutedEventArgs e)
         {
-            double res = 0;
+            double res = -1;
 
             if (cbland.SelectedIndex == 0)
             {
-                tbHomeOut.Text = currency;
-                switch (tbHomeOut.Text)
+                if (tbRUBinp.Text == "" || tbKOPinp.Text == "")
                 {
-                    case "Доллары: ":
-                        res = (Convert.ToDouble(tbRUBinp) + Convert.ToDouble(tbKOPinp)) * 0.017;
-                        break;
-                    case "Евро: ":
-                        res = (Convert.ToDouble(tbRUBinp) + Convert.ToDouble(tbKOPinp)) * 0.018;
-                        break;
-                    case "Тенге: ":
-                        res = (Convert.ToDouble(tbRUBinp) + Convert.ToDouble(tbKOPinp)) * 8.33;
-                        break;
-                    case "Гривны: ":
-                        res = (Convert.ToDouble(tbRUBinp) + Convert.ToDouble(tbKOPinp)) * 0.63;
-                        break;
-                    case "Лиры: ":
-                        res = (Convert.ToDouble(tbRUBinp) + Convert.ToDouble(tbKOPinp)) * 0.32;
-                        break;
-                    default:
-                        break;
+                    spHomeOut.Visibility = Visibility.Collapsed;
+                    MessageBox.Show("Введите количество рублей и копеек", "Ввод значений", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
                 }
-                tbHomeOut.Text += Convert.ToString(res);
-                spHomeOut.Visibility = Visibility.Visible;
+
+                tbHomeOut.Text = currency;
+
+                try
+                {
+
+                    switch (tbHomeOut.Text)
+                    {
+                        case "Доллары: ":
+                            res = (Convert.ToDouble(tbRUBinp.Text) + Convert.ToDouble(tbKOPinp.Text) / 100) * 0.017;
+                            break;
+                        case "Евро: ":
+                            res = (Convert.ToDouble(tbRUBinp.Text) + Convert.ToDouble(tbKOPinp.Text) / 100) * 0.018;
+                            break;
+                        case "Тенге: ":
+                            res = (Convert.ToDouble(tbRUBinp.Text) + Convert.ToDouble(tbKOPinp.Text) / 100) * 8.33;
+                            break;
+                        case "Гривны: ":
+                            res = (Convert.ToDouble(tbRUBinp.Text) + Convert.ToDouble(tbKOPinp.Text) / 100) * 0.63;
+                            break;
+                        case "Лиры: ":
+                            res = (Convert.ToDouble(tbRUBinp.Text) + Convert.ToDouble(tbKOPinp.Text) / 100) * 0.32;
+                            break;
+                        default:
+                            MessageBox.Show("Выберите валюту, в которую необходимо конвертировать рубли", "Выбор валюты", MessageBoxButton.OK, MessageBoxImage.Information);
+                            break;
+                    }
+
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Введите количество рублей и копеек корректно", "Ввод значений", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                if (res != -1)
+                {
+                    tbHomeOut.Text += Convert.ToString(Math.Round(res, 2));
+                    spHomeOut.Visibility = Visibility.Visible;
+                }
             }
             else
             {
                 tbRubOut.Text = "Рубли: ";
                 tbKopOut.Text = "Копейки: ";
-                switch (tbForeignInp.Text)
+                try
                 {
-                    case "Доллары":
-                        res = Convert.ToDouble(tbForeignVal.Text) * 58.31;
-                        break;
-                    case "Евро":
-                        res = Convert.ToDouble(tbForeignVal.Text) * 56.18;
-                        break;
-                    case "Тенге":
-                        res = Convert.ToDouble(tbForeignVal.Text) * 0.12;
-                        break;
-                    case "Гривны":
-                        res = Convert.ToDouble(tbForeignVal.Text) * 1.58;
-                        break;
-                    case "Лиры":
-                        res = Convert.ToDouble(tbForeignVal.Text) * 3.15;
-                        break;
-                    default:
-                        break;
+                    switch (tbForeignInp.Text)
+                    {
+
+                        case "Доллары: ":
+                            res = Convert.ToDouble(tbForeignVal.Text) * 58.31;
+                            break;
+                        case "Евро: ":
+                            res = Convert.ToDouble(tbForeignVal.Text) * 56.18;
+                            break;
+                        case "Тенге: ":
+                            res = Convert.ToDouble(tbForeignVal.Text) * 0.12;
+                            break;
+                        case "Гривны: ":
+                            res = Convert.ToDouble(tbForeignVal.Text) * 1.58;
+                            break;
+                        case "Лиры: ":
+                            res = Convert.ToDouble(tbForeignVal.Text) * 3.15;
+                            break;
+                        default:
+                            MessageBox.Show("Выберите валюту, из которой необходимо конвертировать", "Выбор валюты", MessageBoxButton.OK, MessageBoxImage.Information);
+                            break;
+                    }
                 }
-                tbRubOut.Text += Convert.ToString(Math.Floor(res));
-                tbKopOut.Text += Convert.ToString(Math.Round(res - Math.Floor(res), 2) * 100);
-                spForeignOut.Visibility = Visibility.Visible;
+                catch (Exception)
+                {
+                    MessageBox.Show("Введите количество конвертируемой валюты корректно", "Ввод значений", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                if (res != -1)
+                {
+                    tbRubOut.Text += Convert.ToString(Math.Floor(res));
+                    tbKopOut.Text += Convert.ToString(Math.Round(res - Math.Floor(res), 2) * 100);
+                    spForeignOut.Visibility = Visibility.Visible;
+                }
             }
         }
 
         private void rbUSD_Click(object sender, RoutedEventArgs e)
         {
-            tbForeignInp.Text = rbUSD.Content.ToString();
+            tbForeignInp.Text = rbUSD.Content.ToString() + ": ";
             spForeignOut.Visibility = Visibility.Collapsed;
+            spForeignInp.Visibility = Visibility.Visible;
         }
 
         private void rbEUR_Click(object sender, RoutedEventArgs e)
         {
-            tbForeignInp.Text = rbEUR.Content.ToString();
+            tbForeignInp.Text = rbEUR.Content.ToString() + ": ";
             spForeignOut.Visibility = Visibility.Collapsed;
+            spForeignInp.Visibility = Visibility.Visible;
         }
 
         private void rbKZT_Click(object sender, RoutedEventArgs e)
         {
-            tbForeignInp.Text = rbKZT.Content.ToString();
+            tbForeignInp.Text = rbKZT.Content.ToString() + ": ";
             spForeignOut.Visibility = Visibility.Collapsed;
+            spForeignInp.Visibility = Visibility.Visible;
         }
 
         private void rbUAH_Click(object sender, RoutedEventArgs e)
         {
-            tbForeignInp.Text = rbUAH.Content.ToString();
+            tbForeignInp.Text = rbUAH.Content.ToString() + ": ";
             spForeignOut.Visibility = Visibility.Collapsed;
+            spForeignInp.Visibility = Visibility.Visible;
         }
 
         private void rbTRY_Click(object sender, RoutedEventArgs e)
         {
-            tbForeignInp.Text = rbTRY.Content.ToString();
+            tbForeignInp.Text = rbTRY.Content.ToString() + ": ";
             spForeignOut.Visibility = Visibility.Collapsed;
+            spForeignInp.Visibility = Visibility.Visible;
         }
 
         private void rbUSDout_Click(object sender, RoutedEventArgs e)
         {
-            currency = rbTRYout.Content.ToString() + ": ";
+            currency = rbUSDout.Content.ToString() + ": ";
             spHomeOut.Visibility = Visibility.Collapsed;
         }
 
@@ -168,6 +225,11 @@ namespace Валюты
         {
             currency = rbTRYout.Content.ToString() + ": ";
             spHomeOut.Visibility = Visibility.Collapsed;
+        }
+
+        private void tbKOPinp_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            spChoiceHomeland.Visibility = Visibility.Visible;
         }
     }
 }
