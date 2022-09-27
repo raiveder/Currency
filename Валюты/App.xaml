@@ -1,0 +1,16 @@
+﻿<Application x:Class="Валюты.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Валюты"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Style x:Key="btnStyle" TargetType="Button">
+            <Setter Property="Background" Value="NavajoWhite"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+    </Application.Resources>
+</Application>
