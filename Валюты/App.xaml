@@ -9,15 +9,17 @@
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Margin" Value="5 5 10 0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10 5 5 5"/>
         </Style>
 
-        <Style x:Key="cbStyle" TargetType="ComboBox">
-            <Setter Property="Width" Value="250"/>
+        <Style TargetType="ComboBox">
+            <Setter Property="Width" Value="230"/>
             <Setter Property="FontFamily" Value="Arial Narrow"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Margin" Value="10 10 10 5"/>
         </Style>
 
         <Style x:Key="rbStyle" TargetType="RadioButton">
@@ -25,7 +27,7 @@
             <Setter Property="FontFamily" Value="Arial Narrow"/>
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Margin" Value="10 5 5 5"/>
         </Style>
 
         <Style x:Key="tboxStyle" TargetType="TextBox">
@@ -33,22 +35,13 @@
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Margin" Value="0 5 10 0"/>
+            <Setter Property="Margin" Value="0 5 10 5"/>
             <Setter Property="MinWidth" Value="40"/>
         </Style>
 
-        <Style x:Key="btnFileStyle" TargetType="Button">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Right"/>
-            <Setter Property="FontFamily" Value="Arial Narrow"/>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Margin" Value="5 0 5 0"/>
-        </Style>
-        
         <ControlTemplate TargetType="Button" x:Key="btnTemplate">
-            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1" Background="NavajoWhite"  VerticalAlignment="Center" Margin="5 15 0 0">
-                <ContentControl Margin="5" FontSize="20" FontWeight="DemiBold" FontFamily="Arial Narrow" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}"/>
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1" Background="NavajoWhite" VerticalAlignment="Center" Margin="10 10 10 0">
+                <ContentControl Margin="5" FontSize="20" FontWeight="DemiBold" FontFamily="Arial Narrow" Content="{TemplateBinding Content}" />
             </Border>
         </ControlTemplate>
     </Application.Resources>

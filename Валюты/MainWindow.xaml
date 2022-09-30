@@ -7,16 +7,18 @@
         mc:Ignorable="d"
         Title="Конвертер валют" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Grid Background="PapayaWhip">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
         <StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Конвертировать из" Width="150" Style="{StaticResource tbStyle}"/>
-                <ComboBox Name="cbland" Style="{StaticResource cbStyle}" SelectionChanged="cbLand_SelectionChanged">
+                <TextBlock Text="Конвертировать из" Style="{StaticResource tbStyle}"/>
+                <ComboBox Name="cbland" SelectionChanged="cbLand_SelectionChanged">
                     <ComboBoxItem Content="Отечественной валюты"/>
                     <ComboBoxItem Content="Иностранной валюты"/>
                 </ComboBox>
-               
             </StackPanel>
- <Button x:Name="btnFile" Template="{StaticResource btnTemplate}" Content="Обработать файл" Click="btnFile_Click" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
             <StackPanel Name="spHomeland">
                 <StackPanel Orientation="Horizontal">
@@ -49,17 +51,18 @@
             </StackPanel>
 
             <StackPanel>
-                <Button Name="Run" Template="{StaticResource btnTemplate}" Content="Конвертировать" Click="Run_Click" HorizontalAlignment="Right"/>
+                <Button Name="Run" Template="{StaticResource btnTemplate}" Content="Конвертировать" Click="Run_Click" HorizontalAlignment="Left"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Name="spHomeOut">
-                <TextBlock Text="Валюта:" Name="tbHomeOut" Style="{StaticResource tbStyle}"/>
+                <TextBlock Text="Валюта:" Name="tbHomeOut" Style="{StaticResource tbStyle}" Margin="10 15 5 5"/>
             </StackPanel>
 
             <StackPanel Name="spForeignOut" HorizontalAlignment="Left">
-                <TextBlock Text="Рубли:" Name="tbRubOut" Style="{StaticResource tbStyle}"/>
+                <TextBlock Text="Рубли:" Name="tbRubOut" Style="{StaticResource tbStyle}"  Margin="10 15 5 5"/>
                 <TextBlock Text="Копейки:" Name="tbKopOut" Style="{StaticResource tbStyle}"/>
             </StackPanel>
         </StackPanel>
+        <Button x:Name="btnFile" Template="{StaticResource btnTemplate}" Content="Обработать файл" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnFile_Click"/>
     </Grid>
 </Window>
