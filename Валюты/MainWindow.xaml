@@ -14,7 +14,10 @@
                     <ComboBoxItem Content="Отечественной валюты"/>
                     <ComboBoxItem Content="Иностранной валюты"/>
                 </ComboBox>
+               
             </StackPanel>
+ <Button x:Name="btnFile" Template="{StaticResource btnTemplate}" Content="Обработать файл" Click="btnFile_Click" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+
             <StackPanel Name="spHomeland">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Рубли:" Style="{StaticResource tbStyle}"/>
@@ -46,7 +49,7 @@
             </StackPanel>
 
             <StackPanel>
-                <Button Name="Run" Template="{StaticResource btnTemplate}" Click="Run_Click"/>
+                <Button Name="Run" Template="{StaticResource btnTemplate}" Content="Конвертировать" Click="Run_Click" HorizontalAlignment="Right"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Name="spHomeOut">
