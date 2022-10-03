@@ -1,34 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.IO;
 
 namespace Валюты
 {
     struct Money
     {
-        public string rub;
-        public string kop;
-        public string usd;
-        public string eur;
-        public string nir;
-        public string isk;
-        public string cny;
+        public int rub;
+        public int kop;
+        public double usd;
+        public double eur;
+        public double inr;
+        public double czk;
+        public double cny;
 
         public override string ToString()
         {
-            return rub + ";" + kop + ";" + usd + ";" + eur + ";" + nir + ";" + isk + ";" + cny;
+            string rub = this.rub != 0 ? Convert.ToString(this.rub) : "";
+            string kop = this.kop != 0 ? Convert.ToString(this.kop) : "";
+            string usd = this.usd != 0 ? Convert.ToString(this.usd) : "";
+            string eur = this.eur != 0 ? Convert.ToString(this.eur) : "";
+            string inr = this.inr != 0 ? Convert.ToString(this.inr) : "";
+            string czk = this.czk != 0 ? Convert.ToString(this.czk) : "";
+            string cny = this.cny != 0 ? Convert.ToString(this.cny) : "";
+
+            return rub + ";" + kop + ";" + usd + ";" + eur + ";" + inr + ";" + czk + ";" + cny;
         }
     }
 
@@ -37,6 +35,16 @@ namespace Валюты
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const double USD = 57.57;
+        private const double EUR = 54.4;
+        private const double KZT = 0.120773;
+        private const double UAH = 1.56;
+        private const double TRY = 0.321543;
+
+        private const double INR = 0.706;
+        private const double CZK = 2.29;
+        private const double CNY = 8.13;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -127,19 +135,19 @@ namespace Валюты
                     switch (tbHomeOut.Text)
                     {
                         case "Доллары: ":
-                            res = (Convert.ToInt32(tbRUBinp.Text) + Convert.ToDouble(tbKOPinp.Text) / 100) * 0.017;
+                            res = (Convert.ToInt32(tbRUBinp.Text) + Convert.ToDouble(tbKOPinp.Text) / 100) * (1 / USD);
                             break;
                         case "Евро: ":
-                            res = (Convert.ToInt32(tbRUBinp.Text) + Convert.ToDouble(tbKOPinp.Text) / 100) * 0.018;
-                            break;                                       
-                        case "Тенге: ":                                 
-                            res = (Convert.ToInt32(tbRUBinp.Text) + Convert.ToDouble(tbKOPinp.Text) / 100) * 8.33;
-                            break;                                        
-                        case "Гривны: ":                                  
-                            res = (Convert.ToInt32(tbRUBinp.Text) + Convert.ToDouble(tbKOPinp.Text) / 100) * 0.63;
-                            break;                                       
-                        case "Лиры: ":                                    
-                            res = (Convert.ToInt32(tbRUBinp.Text) + Convert.ToDouble(tbKOPinp.Text) / 100) * 0.32;
+                            res = (Convert.ToInt32(tbRUBinp.Text) + Convert.ToDouble(tbKOPinp.Text) / 100) * (1 / EUR);
+                            break;
+                        case "Тенге: ":
+                            res = (Convert.ToInt32(tbRUBinp.Text) + Convert.ToDouble(tbKOPinp.Text) / 100) * (1 / KZT);
+                            break;
+                        case "Гривны: ":
+                            res = (Convert.ToInt32(tbRUBinp.Text) + Convert.ToDouble(tbKOPinp.Text) / 100) * (1 / UAH);
+                            break;
+                        case "Лиры: ":
+                            res = (Convert.ToInt32(tbRUBinp.Text) + Convert.ToDouble(tbKOPinp.Text) / 100) * (1 / TRY);
                             break;
                         default:
                             MessageBox.Show("Выберите валюту, в которую необходимо конвертировать рубли", "Выбор валюты", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -174,19 +182,19 @@ namespace Валюты
                     {
 
                         case "Доллары: ":
-                            res = Convert.ToDouble(tbForeignVal.Text) * 58.31;
+                            res = Convert.ToDouble(tbForeignVal.Text) * USD;
                             break;
                         case "Евро: ":
-                            res = Convert.ToDouble(tbForeignVal.Text) * 56.18;
-                            break;          
-                        case "Тенге: ":     
-                            res = Convert.ToDouble(tbForeignVal.Text) * 0.12;
-                            break;         
-                        case "Гривны: ":   
-                            res = Convert.ToDouble(tbForeignVal.Text) * 1.58;
-                            break;          
-                        case "Лиры: ":      
-                            res = Convert.ToDouble(tbForeignVal.Text) * 3.15;
+                            res = Convert.ToDouble(tbForeignVal.Text) * EUR;
+                            break;
+                        case "Тенге: ":
+                            res = Convert.ToDouble(tbForeignVal.Text) * KZT;
+                            break;
+                        case "Гривны: ":
+                            res = Convert.ToDouble(tbForeignVal.Text) * UAH;
+                            break;
+                        case "Лиры: ":
+                            res = Convert.ToDouble(tbForeignVal.Text) * TRY;
                             break;
                         default:
                             MessageBox.Show("Выберите валюту, из которой необходимо конвертировать", "Выбор валюты", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -280,32 +288,86 @@ namespace Валюты
         {
             List<Money> list = new List<Money>();
             getData("dataMoney.csv", list);
-
+            inputData("newDataMoney.csv", convertCurrency(list));
         }
 
-        static List<Money> createList(List<Money> list)
+        static List<Money> convertCurrency(List<Money> list)
         {
             List<Money> newList = new List<Money>();
 
             for (int i = 0; i < list.Count; i++)
             {
-                string rub = list[i].rub;
-                string kop = list[i].kop;
-                string usd = list[i].usd;
-                string eur = list[i].eur;
-                string nir = list[i].nir;
-                string isk = list[i].isk;
-                string cny = list[i].cny;
+                int rub = list[i].rub;
+                int kop = list[i].kop;
+                double usd = list[i].usd;
+                double eur = list[i].eur;
+                double inr = list[i].inr;
+                double czk = list[i].czk;
+                double cny = list[i].cny;
 
-                //if (rub || !int.TryParse(rub, out int result))
-                //{
-                //    rub = null;
-                //}
+                if (rub != 0)
+                {
+                    usd = rub * (1 / USD);
+                    eur = rub * (1 / EUR);
+                    inr = rub * (1 / INR);
+                    czk = rub * (1 / CZK);
+                    cny = rub * (1 / CNY);
+                }
 
-                //newList.Add(new Money
-                //{
+                if (kop != 0)
+                {
+                    usd += kop / 100.0 * (1 / USD);
+                    eur += kop / 100.0 * (1 / EUR);
+                    inr += kop / 100.0 * (1 / INR);
+                    czk += kop / 100.0 * (1 / CZK);
+                    cny += kop / 100.0 * (1 / CNY);
+                }
 
-                //});
+                if (usd != 0 && rub == 0 && kop == 0)
+                {
+                    rub = (int)Math.Floor(usd * USD);
+                    double a = Math.Round(usd * USD - Math.Floor(usd * USD), 2) * 100;
+                    kop = (int)a;
+                }
+
+                if (eur != 0 && rub == 0 && kop == 0)
+                {
+                    rub = (int)Math.Floor(eur * EUR);
+                    double a = Math.Round(eur * EUR - Math.Floor(eur * EUR), 2) * 100;
+                    kop = (int)a;
+                }
+
+                if (inr != 0 && rub == 0 && kop == 0)
+                {
+                    rub = (int)Math.Floor(inr * INR);
+                    double a = Math.Round(inr * INR - Math.Floor(inr * INR), 2) * 100;
+                    kop = (int)a;
+                }
+
+                if (czk != 0 && rub == 0 && kop == 0)
+                {
+                    rub = (int)Math.Floor(czk * CZK);
+                    double a = Math.Round(czk * CZK - Math.Floor(czk * CZK), 2) * 100;
+                    kop = (int)a;
+                }
+
+                if (cny != 0 && rub == 0 && kop == 0)
+                {
+                    rub = (int)Math.Floor(cny * CNY);
+                    double a = Math.Round(cny * CNY - Math.Floor(cny * CNY), 2) * 100;
+                    kop= (int)a;
+                }
+
+                newList.Add(new Money
+                {
+                    rub = rub,
+                    kop = kop,
+                    usd = Math.Round(usd, 2),
+                    eur = Math.Round(eur, 2),
+                    inr = Math.Round(inr, 2),
+                    czk = Math.Round(czk, 2),
+                    cny = Math.Round(cny, 2)
+                }) ;
             }
 
             return newList;
@@ -313,60 +375,59 @@ namespace Валюты
 
         static void getData(string path, List<Money> list)
         {
-            using (StreamReader sr = new StreamReader(path))
+            try
             {
-                while (!sr.EndOfStream)
+                using (StreamReader sr = new StreamReader(path))
                 {
-                    string[] array = sr.ReadLine().Split(';');
+                    while (!sr.EndOfStream)
+                    {
+                        string[] array = sr.ReadLine().Split(';');
 
-                    string rub = array[0];
-                    string kop = array[1];
-                    string usd = array[2];
-                    string eur = array[3];
-                    string nir = array[4];
-                    string isk = array[5];
-                    string cny = array[6];
+                        if (array[0] == "" || !int.TryParse(array[0], out int result))
+                        {
+                            array[0] = null;
+                        }
+                        if (array[1] == "" || !int.TryParse(array[1], out result))
+                        {
+                            array[1] = null;
+                        }
+                        if (array[2] == "" || !double.TryParse(array[2], out double res))
+                        {
+                            array[2] = null;
+                        }
+                        if (array[3] == "" || !double.TryParse(array[3], out res))
+                        {
+                            array[3] = null;
+                        }
+                        if (array[4] == "" || !double.TryParse(array[4], out res))
+                        {
+                            array[4] = null;
+                        }
+                        if (array[5] == "" || !double.TryParse(array[5], out res))
+                        {
+                            array[5] = null;
+                        }
+                        if (array[6] == "" || !double.TryParse(array[6], out res))
+                        {
+                            array[6] = null;
+                        }
 
-                    if (rub == "" || !int.TryParse(rub, out int result))
-                    {
-                        rub = null;
+                        list.Add(new Money()
+                        {
+                            rub = Convert.ToInt32(array[0]),
+                            kop = Convert.ToInt32(array[1]),
+                            usd = Convert.ToDouble(array[2]),
+                            eur = Convert.ToDouble(array[3]),
+                            inr = Convert.ToDouble(array[4]),
+                            czk = Convert.ToDouble(array[5]),
+                            cny = Convert.ToDouble(array[6])
+                        });
                     }
-                    if (kop == "" || !int.TryParse(kop, out result))
-                    {
-                        kop = null;
-                    }
-                    if (usd == "" || !int.TryParse(usd, out result))
-                    {
-                        usd = null;
-                    }
-                    if (eur == "" || !int.TryParse(eur, out result))
-                    {
-                        eur = null;
-                    }
-                    if (nir == "" || !int.TryParse(nir, out result))
-                    {
-                        nir = null;
-                    }
-                    if (isk == "" || !int.TryParse(isk, out result))
-                    {
-                        isk = null;
-                    }
-                    if (cny == "" || !int.TryParse(cny, out result))
-                    {
-                        cny = null;
-                    }
-
-                    list.Add(new Money()
-                    {
-                        rub = rub,
-                        kop = kop,
-                        usd = usd,
-                        eur = eur,
-                        nir = nir,
-                        isk = isk,
-                        cny = cny
-                    });
                 }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Не найден файл", "Обработка файла", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -374,9 +435,13 @@ namespace Валюты
         {
             using (StreamWriter sw = new StreamWriter(path))
             {
+                sw.WriteLine("Rubles;Kopecks;Dollars;Euro;Rupees;Crowns;Yuan");
                 foreach (Money item in list)
                 {
-                    sw.WriteLine(item.ToString());
+                    if (item.ToString() != "0;0;0;0;0;0;0" && item.ToString() != ";;;;;;")
+                    {
+                        sw.WriteLine(item.ToString());
+                    }
                 }
             }
         }
