@@ -287,8 +287,12 @@ namespace Валюты
         private void btnFile_Click(object sender, RoutedEventArgs e)
         {
             List<Money> list = new List<Money>();
-            getData("dataMoney.csv", list);
+            string path = Environment.CurrentDirectory;
+            path = path.Substring(0, path.Length - 9);
+            path += "dataMoney.csv";
+            getData(path, list);
             inputData("newDataMoney.csv", convertCurrency(list));
+            MessageBox.Show("Новый файл находится в папке \"Валюты\\bin\\debug\\\"", "Обработка файла", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         static List<Money> convertCurrency(List<Money> list)
@@ -427,7 +431,7 @@ namespace Валюты
             }
             catch (Exception)
             {
-                MessageBox.Show("Не найден файл", "Обработка файла", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Не найден файл. Поместите файл dataMoney.csv в папку \"Валюты\"", "Обработка файла", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 
